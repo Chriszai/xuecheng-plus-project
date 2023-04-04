@@ -9,5 +9,18 @@
         <module name="xuecheng-plus-project" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="xuecheng-plus-base" target="1.8" />
+      <module name="xuecheng-plus-content" target="1.8" />
+      <module name="xuecheng-plus-content-api" target="1.8" />
+      <module name="xuecheng-plus-content-model" target="1.8" />
+      <module name="xuecheng-plus-content-service" target="1.8" />
+      <module name="xuecheng-plus-generator" target="1.8" />
+      <module name="xuecheng-plus-parent" target="1.8" />
+      <module name="xuecheng-plus-system" target="1.8" />
+      <module name="xuecheng-plus-system-api" target="1.8" />
+      <module name="xuecheng-plus-system-model" target="1.8" />
+      <module name="xuecheng-plus-system-service" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
