@@ -38,8 +38,8 @@ spring:
   profiles:
     active: dev   #环境名
 
-#logging:
-#  config: classpath:log4j2-dev.xml  # 日志文件配置路径
+logging:
+  config: classpath:log4j2-dev.xml  # 日志文件配置路径
 
 
 #swagger:
