@@ -28,6 +28,10 @@ spring:
           - data-id: logging-${spring.profiles.active}.yaml
             group: xuecheng-plus-common
             refresh: true
+          - data-id: freemarker-config-dev.yaml
+            group: xuecheng-plus-common
+            refresh: true
+
 
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
@@ -38,8 +42,8 @@ spring:
   profiles:
     active: dev   #环境名
 
-logging:
-  config: classpath:log4j2-dev.xml  # 日志文件配置路径
+#logging:
+#  config: classpath:log4j2-dev.xml  # 日志文件配置路径
 
 
 #swagger:

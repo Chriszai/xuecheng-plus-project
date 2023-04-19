@@ -12,6 +12,10 @@ import org.springframework.http.MediaType;
 import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Mr.M
@@ -88,6 +92,57 @@ public class MinioTest {
         }
 
     }
+
+
+    //将分块文件上传到minio
+    @Test
+    public void uploadChunk() throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        for (int i = 0; i < 6; i++) {
+            //上传文件的参数信息
+            UploadObjectArgs uploadObjectArgs = UploadObjectArgs.builder()
+                    .bucket("testbucket")//桶
+                    .filename("D:\\develop\\upload\\chunk\\"+i) //指定本地文件路径
+                    .object("chunk/"+i)//对象名 放在子目录下
+                    .build();
+
+            //上传文件
+            minioClient.uploadObject(uploadObjectArgs);
+            System.out.println("上传分块"+i+"成功");
+        }
+
+    }
+
+    //调用minio接口合并分块
+    @Test
+    public void testMerge() throws Exception {
+
+//        List<ComposeSource> sources = new ArrayList<>();
+//        for (int i = 0; i < 30; i++) {
+//            //指定分块文件的信息
+//            ComposeSource composeSource = ComposeSource.builder().bucket("testbucket").object("chunk/" + i).build();
+//            sources.add(composeSource);
+//        }
+
+        List<ComposeSource> sources = Stream.iterate(0, i -> ++i).limit(6).map(i -> ComposeSource.builder().bucket("testbucket").object("chunk/" + i).build()).collect(Collectors.toList());
+
+        //指定合并后的objectName等信息
+        ComposeObjectArgs composeObjectArgs = ComposeObjectArgs.builder()
+                .bucket("testbucket")
+                .object("merge01.mp4")
+                .sources(sources)//指定源文件
+                .build();
+        //合并文件,
+        //报错size 1048576 must be greater than 5242880，minio默认的分块文件大小为5M
+        minioClient.composeObject(composeObjectArgs);
+
+    }
+
+
+
+    //批量清理分块文件
+
+
 
 
 
